@@ -238,6 +238,10 @@ public class Dino.PeerState : Object {
         // If video_content_parameter == null && !mute we're trying to mute a non-existant feed. It will be muted as soon as it is created.
     }
 
+	internal void send_dtmf(int number) {
+        Application.get_default().plugin_registry.video_call_plugin.send_dtmf(get_audio_stream(), number);
+	}
+
     public Xep.JingleRtp.Stream? get_video_stream() {
         if (video_content_parameter != null) {
             return video_content_parameter.stream;

@@ -115,6 +115,8 @@ public abstract interface VideoCallPlugin : Object {
     public abstract void set_device(Xmpp.Xep.JingleRtp.Stream? stream, MediaDevice? device);
 
     public abstract void dump_dot();
+
+	public abstract void send_dtmf(Xmpp.Xep.JingleRtp.Stream? stream, int number);
 }
 
 public abstract interface VideoCallWidget : Object {

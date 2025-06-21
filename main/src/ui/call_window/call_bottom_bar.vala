@@ -23,10 +23,15 @@ public class Dino.Ui.CallBottomBar : Gtk.Box {
     private MenuButton video_settings_button = new MenuButton() { halign=Align.END, valign=Align.END };
     public VideoSettingsPopover? video_settings_popover;
 
+    private MenuButton dtmf_button = new MenuButton() { height_request=45, width_request=45, halign=Align.START, valign=Align.START };
+    private Overlay dtmf_button_overlay = new Overlay();
+    private Image dtmf_image = new Image() { pixel_size=22 };
+    public DtmfPopover dtmf_popover;
+
     private Label label = new Label("") { halign=Align.CENTER, valign=Align.CENTER, wrap=true, wrap_mode=Pango.WrapMode.WORD_CHAR, hexpand=true };
     private Stack stack = new Stack();
 
-    public CallBottomBar() {
+    public CallBottomBar(CallWindow call_window) {
         Object(orientation:Orientation.HORIZONTAL, spacing:0);
 
         Box main_buttons = new Box(Orientation.HORIZONTAL, 20) { margin_start=40, margin_end=40, margin_bottom=20, margin_top=20, halign=Align.CENTER, hexpand=true };
@@ -60,6 +65,16 @@ public class Dino.Ui.CallBottomBar : Gtk.Box {
         video_settings_button.add_css_class("call-button");
         video_settings_button.add_css_class("call-mediadevice-settings-button");
         main_buttons.append(video_button_overlay);
+		dtmf_popover = new DtmfPopover(call_window);
+        dtmf_button.set_child(dtmf_image);
+        dtmf_button.add_css_class("circular");
+		dtmf_button.popover = dtmf_popover;
+        Adw.Bin dtmf_button_bin = new Adw.Bin();
+        dtmf_button_bin.add_css_class("call-button");
+        dtmf_button_bin.margin_end = dtmf_button_bin.margin_bottom = 5;
+        dtmf_button_bin.set_child(dtmf_button);
+        dtmf_button_overlay.set_child(dtmf_button_bin);
+        main_buttons.append(dtmf_button_overlay);
 
         Button button_hang = new Button() { height_request=45, width_request=45, halign=Align.START, valign=Align.START };
         button_hang.set_child(new Image() { icon_name="dino-phone-hangup-symbolic", pixel_size=22 });

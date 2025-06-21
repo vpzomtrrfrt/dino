@@ -751,6 +751,23 @@ public class Dino.Plugins.Rtp.Stream : Xmpp.Xep.JingleRtp.Stream {
         input_device.update_bitrate(payload_type, target_send_bitrate);
     }
 
+	public void send_dtmf_event(int number, bool starting) {
+		stdout.printf("sending dtmf %d %b\n", number, starting);
+
+		var structure = new Gst.Structure(
+			"dtmf-event",
+			"type", typeof(int), 1,
+			"number", typeof(int), number,
+			"volume", typeof(int), 25,
+			"start", typeof(bool), starting,
+			null
+		);
+
+		var event = new Gst.Event.custom(Gst.EventType.CUSTOM_UPSTREAM, (owned) structure);
+
+		input.send_event(event);
+	}
+
     public uint get_participant_ssrc(Xmpp.Jid participant) {
         if (participant.equals(content.session.peer_full_jid)) {
             return participant_ssrc;

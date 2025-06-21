@@ -503,4 +503,18 @@ public class Dino.Plugins.Rtp.Plugin : RootInterface, VideoCallPlugin, Object {
             plugin_stream.output_device = real_device;
         }
     }
+
+	public void send_dtmf(Xmpp.Xep.JingleRtp.Stream? stream, int number) {
+		if(stream == null) return;
+
+		var stream_ = stream as Stream;
+
+		stream_.send_dtmf_event(number, true);
+
+		// can't use add_once due to https://gitlab.gnome.org/GNOME/vala/-/issues/1556
+		Timeout.add(250, () => {
+			stream_.send_dtmf_event(number, false);
+			return false;
+		});
+	}
 }

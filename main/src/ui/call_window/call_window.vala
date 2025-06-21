@@ -13,7 +13,7 @@ namespace Dino.Ui {
 
         public Overlay overlay = new Overlay();
         public Grid grid = new Grid();
-        public CallBottomBar bottom_bar = new CallBottomBar();
+        public CallBottomBar bottom_bar;
         public Revealer bottom_bar_revealer = new Revealer() { valign=Align.END, transition_type=RevealerTransitionType.CROSSFADE, transition_duration=200 };
         public HeaderBar header_bar = new HeaderBar() { valign=Align.START, halign=Align.END, show_title_buttons=true, opacity=0.0 };
         public Revealer header_bar_revealer = new Revealer() { halign=Align.END, valign=Align.START, transition_type=RevealerTransitionType.SLIDE_LEFT, transition_duration=200, reveal_child=false };
@@ -36,6 +36,8 @@ namespace Dino.Ui {
         public bool controls_active { get; set; default=true; }
 
         construct {
+			bottom_bar = new CallBottomBar(this);
+
             header_bar.add_css_class("call-header-bar");
             header_bar.title_widget = new Box(Orientation.VERTICAL, 0);
 //            header_bar.spacing = 0;

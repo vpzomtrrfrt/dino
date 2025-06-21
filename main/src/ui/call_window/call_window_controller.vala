@@ -142,6 +142,10 @@ public class Dino.Ui.CallWindowController : Object {
         });
     }
 
+	public void send_dtmf(int number) {
+		call_state.send_dtmf(number);
+	}
+
     private void invite_button_clicked() {
         Gee.List<Account> acc_list = new ArrayList<Account>(Account.equals_func);
         acc_list.add(call.account);

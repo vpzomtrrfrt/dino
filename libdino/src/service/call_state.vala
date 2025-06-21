@@ -186,6 +186,12 @@ public class Dino.CallState : Object {
         terminated(call.account.bare_jid, null, reason_text);
     }
 
+	public void send_dtmf(int number) {
+        foreach (PeerState peer in peers.values) {
+			peer.send_dtmf(number);
+		}
+	}
+
     public void mute_own_audio(bool mute) {
         we_should_send_audio = !mute;
         foreach (PeerState peer in peers.values) {
